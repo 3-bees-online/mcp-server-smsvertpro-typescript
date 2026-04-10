@@ -1,0 +1,44 @@
+{
+  "name": "@3-bees-online/mcp-server-smsvertpro",
+  "version": "1.0.0",
+  "description": "MCP server to send professional SMS via SMS Vert Pro — 9 tools including OTP, delivery reports, scheduled SMS with cancellation",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-server-smsvertpro": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "keywords": [
+    "mcp",
+    "sms",
+    "otp",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "windsurf",
+    "ai-agent",
+    "smsvertpro"
+  ],
+  "author": "3 Bees Online SAS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3-bees-online/mcp-server-smsvertpro-typescript.git"
+  },
+  "homepage": "https://www.smsvertpro.com/integration-ia/",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
