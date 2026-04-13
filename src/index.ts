@@ -100,7 +100,7 @@ async function callApi(
     }
     return {
       status: "REQUEST_ERROR",
-      error: error instanceof Error ? error.message : String(error),
+      error: "API request failed",
     };
   }
 }
@@ -135,8 +135,9 @@ This is NOT added automatically by the API.`,
       return { content: [{ type: "text", text: "Error: no recipients provided." }] };
     }
 
+    let validatedRecipients: string[];
     try {
-      const recipients = to.map(validatePhone);
+      validatedRecipients = to.map(validatePhone);
       sender = validateSender(sender);
     } catch (e) {
       return {
@@ -162,7 +163,7 @@ This is NOT added automatically by the API.`,
     const payload: Record<string, unknown> = {
       request: "send_sms",
       message: { sender, text: trimmedMessage },
-      recipients: to.map((n) => n.trim().replace(/^\+/, "")),
+      recipients: validatedRecipients,
     };
 
     if (delay) {
@@ -191,7 +192,7 @@ This is NOT added automatically by the API.`,
 
     return {
       content: [
-        { type: "text", text: `Send error: ${result.status ?? "Unknown"}\n${JSON.stringify(result)}` },
+        { type: "text", text: `Send error: ${result.status ?? "Unknown"}` },
       ],
     };
   }
@@ -210,7 +211,7 @@ server.tool(
         content: [{ type: "text", text: `Balance: ${result.credits} SMS credits available.` }],
       };
     }
-    return { content: [{ type: "text", text: `Error: ${JSON.stringify(result)}` }] };
+    return { content: [{ type: "text", text: `Error: ${result.status ?? "Unknown"}` }] };
   }
 );
 
@@ -323,7 +324,7 @@ server.tool(
         ],
       };
     }
-    return { content: [{ type: "text", text: `OTP error: ${JSON.stringify(result)}` }] };
+    return { content: [{ type: "text", text: `OTP error: ${result.status ?? "Unknown"}` }] };
   }
 );
 
@@ -433,7 +434,7 @@ To cancel a specific SMS, also provide sms_id along with campaign_id.`,
       content: [
         {
           type: "text",
-          text: `Cancellation error: ${result.status ?? "Unknown"}\n${JSON.stringify(result)}`,
+          text: `Cancellation error: ${result.status ?? "Unknown"}`,
         },
       ],
     };
